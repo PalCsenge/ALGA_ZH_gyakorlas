@@ -27,6 +27,7 @@ namespace OE.ALGA.Sandbox
             Console.WriteLine("40: " + fahalmaz.Darab(40));
             Console.WriteLine("30: " + fahalmaz.Darab(30));
             Console.WriteLine("25: " + fahalmaz.Darab(25));
+            Console.WriteLine("Elemszam:" + fahalmaz.Elemszam);
         }
     }
 }

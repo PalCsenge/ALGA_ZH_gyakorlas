@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OE.ALGA.Paradigmak;
+using System;
 
 namespace OE.ALGA.Adatszerkezetek
 {
@@ -25,9 +26,28 @@ namespace OE.ALGA.Adatszerkezetek
         {
         }
 
+        public int Elemszam
+        {
+            get
+            {
+                int db = 0;
+                BejarElemszam(x =>
+                {
+                    db += x.darab;
+                });
+                return db;
+            }
+            private set { Elemszam = value; }
+        }
+
         public void Bejar(Action<T> muvelet)
         {
             ReszfaBejarasPreOrder(gyoker, muvelet);
+        }
+
+        public void BejarElemszam(Action<FaElem<T>> muvelet)
+        {
+            ReszfaBejaras(gyoker, muvelet);
         }
 
         public void Beszur(T ertek)
@@ -39,7 +59,7 @@ namespace OE.ALGA.Adatszerkezetek
             else
             {
                 gyoker = ReszfabaBeszur(gyoker, ertek);
-            }    
+            }
         }
 
         public bool Eleme(T ertek)
@@ -66,7 +86,7 @@ namespace OE.ALGA.Adatszerkezetek
             return 0;
         }
 
-        public FaElem<T> Kereses(T ertek) 
+        public FaElem<T> Kereses(T ertek)
         { 
             return PrivateKereses(gyoker, ertek);
         }
@@ -90,11 +110,11 @@ namespace OE.ALGA.Adatszerkezetek
 
             int cmp = p.tart.CompareTo(ertek);
 
-            if (cmp > 0)
+            if (cmp == 1)
             {
                 p.bal = ReszfabaBeszur(p.bal, ertek);
             }
-            else if (cmp < 0)
+            else if (cmp == -1)
             {
                 p.jobb = ReszfabaBeszur(p.jobb, ertek);
             }
@@ -123,6 +143,16 @@ namespace OE.ALGA.Adatszerkezetek
                 muvelet(p.tart);
                 ReszfaBejarasPreOrder(p.bal, muvelet);
                 ReszfaBejarasPreOrder(p.jobb, muvelet);
+            }
+        }
+
+        private void ReszfaBejaras(FaElem<T> p, Action<FaElem<T>> muvelet)
+        {
+            if (p != null)
+            {
+                muvelet(p);
+                ReszfaBejaras(p.bal, muvelet);
+                ReszfaBejaras(p.jobb, muvelet);
             }
         }
 

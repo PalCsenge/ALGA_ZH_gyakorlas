@@ -49,14 +49,14 @@ namespace OE.ALGA.Adatszerkezetek
         public T Elso()
         {
             if (n <= 0) throw new NincsElemKivetel();
-            return E[e % E.Length];
+            return E[e];
         }
 
         public void Sorba(T ertek)
         {
             if (n >= E.Length) throw new NincsHelyKivetel();
             n++;
-            u = u % E.Length;
+            u = u % E.Length - 1;
             E[u] = ertek;
         }
 
@@ -64,8 +64,9 @@ namespace OE.ALGA.Adatszerkezetek
         {
             if (Ures) throw new NincsElemKivetel();
             n--;
-            e = e % E.Length;
-            return E[e];
+            T eredmeny = E[e];
+            e = e % E.Length - 1;
+            return eredmeny;
         }
     }
 
@@ -77,6 +78,11 @@ namespace OE.ALGA.Adatszerkezetek
         public TombLista(int meret)
         {
             E = new T[meret];
+        }
+
+        public TombLista()
+        {
+            E = new T[3];
         }
 
         public int Elemszam { get { return n; } }
